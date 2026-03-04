@@ -113,7 +113,7 @@ dotnet add ./tests/OneShot.UnitTests/OneShot.UnitTests.csproj package Moq
 ```text
 backend/
 ├─ src/
-│  ├─ OneShot.Api/
+│  ├─ OneShot.Functions/
 │  ├─ OneShot.Application/
 │  ├─ OneShot.Domain/
 │  └─ OneShot.Infrastructure/

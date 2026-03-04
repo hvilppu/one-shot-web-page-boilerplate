@@ -82,6 +82,10 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
+      - name: Test frontend
+        working-directory: ./frontend
+        run: npm run test
+
       - name: Upload frontend artifact
         uses: actions/upload-artifact@v4
         with:

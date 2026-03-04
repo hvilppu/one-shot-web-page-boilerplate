@@ -5,6 +5,7 @@ Tämän ohjeen avulla saat one-shot C# + Vue + MSSQL -sovelluksen käyntiin paik
 ## Vaatimukset
 
 - .NET SDK asennettuna (`dotnet --version`)
+- Azure Functions Core Tools v4 asennettuna (`func --version`)
 - Node.js + npm asennettuna (`node -v`, `npm -v`)
 - SQL Server käynnissä (paikallinen, kontti tai etäpalvelin)
 - Valinnainen: SSMS tai Azure Data Studio
@@ -18,12 +19,19 @@ cd one-shot-web-page-boilerplate
 
 ## 2) Taustapalvelun konfigurointi
 
-Luo `appsettings.Development.json` tai käytä ympäristömuuttujia.
-
-Esimerkkimuotoinen yhteysmerkkijono:
+Luo `backend/src/OneShot.Functions/local.settings.json`:
 
 ```json
 {
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AZURE_FUNCTIONS_ENVIRONMENT": "Development",
+    "JWT__Issuer": "oneshot",
+    "JWT__Audience": "oneshot-web",
+    "JWT__Key": "change-this-long-secret"
+  },
   "ConnectionStrings": {
     "DefaultConnection": "Server=localhost;Database=OneShotDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
   }
