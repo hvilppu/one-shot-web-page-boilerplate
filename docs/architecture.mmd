@@ -1,0 +1,21 @@
+%% OneShot arkkitehtuurikaavio (Mermaid)
+flowchart LR
+
+  user[Käyttäjän selain]
+  vue[Vue-käyttöliittymä\nVite-sovellus]
+  api[C# taustapalvelu Function/API\n.NET-palvelu]
+  auth[Auth/JWT-validointi]
+  db[(MSSQL\nOneShotDb)]
+  logs[(Sovelluslokit)]
+
+  user --> vue
+  vue -->|HTTPS REST| api
+  api --> auth
+  api -->|Luku/Kirjoitus| db
+  api --> logs
+
+  classDef app fill:#eef6ff,stroke:#3b82f6,stroke-width:1px,color:#111827;
+  classDef data fill:#ecfdf5,stroke:#10b981,stroke-width:1px,color:#111827;
+
+  class vue,api,auth app;
+  class db,logs data;
