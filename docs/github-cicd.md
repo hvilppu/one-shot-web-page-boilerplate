@@ -3,7 +3,7 @@
 Tämä ohje tarjoaa käytännöllisen GitHub Actions -asetuksen OneShotille:
 
 - Vue-käyttöliittymä (Node.js)
-- C#-taustapalvelu (.NET)
+- C#-taustapalvelu (Azure Functions, isolated worker)
 - MSSQL-integraatiotestit (valinnainen)
 - Julkaisuartefaktien paketointi julkaisua varten
 
@@ -85,6 +85,15 @@ jobs:
       - name: Test frontend
         working-directory: ./frontend
         run: npm run test
+
+      - name: Publish backend
+        run: dotnet publish ./backend/src/OneShot.Functions --configuration Release --output ./backend-publish
+
+      - name: Upload backend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-publish
+          path: ./backend-publish
 
       - name: Upload frontend artifact
         uses: actions/upload-artifact@v4
