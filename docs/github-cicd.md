@@ -135,6 +135,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Download backend artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-publish
+          path: ./backend-publish
+
       - name: Download frontend artifact
         uses: actions/download-artifact@v4
         with:
