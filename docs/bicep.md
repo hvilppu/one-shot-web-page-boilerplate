@@ -3,7 +3,7 @@
 Tämä dokumentti määrittää minimaalisen Azure Bicep -suunnitelman OneShotille:
 
 - Vue-käyttöliittymä
-- C#-taustapalvelu (Function App / API-ajoympäristö)
+- C#-taustapalvelu (Azure Function App, HTTP-triggerit, isolated worker)
 - MSSQL-taustatietovarasto
 
 ## Tavoiteltu Azure-arkkitehtuuri

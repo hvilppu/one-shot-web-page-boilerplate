@@ -5,7 +5,7 @@
 OneShot Web Page on yhden toteutuskierroksen (one-shot) full-stack-pohja, jossa:
 
 - Vue toimii käyttöliittymänä
-- C#/.NET toimii taustapalveluna (function/API)
+- C#/.NET toimii taustapalveluna (Azure Function App, HTTP-triggerit)
 - MSSQL toimii päätietokantana
 
 Tavoite on saada toimiva kehitysympäristö nopeasti ylös, dokumentaatio edellä, ja jatkaa siitä tuotantovalmiiseen julkaisuun (CI/CD + testit + infra).
@@ -13,9 +13,8 @@ Tavoite on saada toimiva kehitysympäristö nopeasti ylös, dokumentaatio edell�
 OneShot Web Page on full-stack-aloituspohja, joka käyttää:
 
 - **Käyttöliittymä:** Vue
-- **Taustapalvelu:** C# (.NET)
+- **Taustapalvelu:** C# (.NET Azure Functions, HTTP-triggerit)
 - **Tietokanta:** Microsoft SQL Server (MSSQL)
-- **API-ajoympäristö:** Käynnissä oleva taustapalvelun function/API-palvelu
 
 Tässä repositoriossa dokumentaatio on ensin, jotta voit rakentaa ja julkaista nopeasti.
 
@@ -73,7 +72,7 @@ Käytä näitä lähtötasona.
 
 ## Tila
 
-- [ ] Taustapalvelun function/API-rajapinnat kytketty
+- [ ] Taustapalvelun Azure Function App -päätepisteet kytketty
 - [ ] Käyttöliittymä kytketty APIin
 - [ ] MSSQL-migraatiot ajettu
 - [ ] End-to-end-testi läpäisty
@@ -87,7 +86,7 @@ Päivitä kaikki dokumentit toteutuksen edetessä. Pidä tämä tiedosto korkean
 Jos tarkoitus on, että Claude generoi rungon, käytä projektin juuressa Claude-komentoa:
 
 ```powershell
-claude "Luo tähän projektiin backend (C# .NET Web API) ja frontend (Vue + Vite + TypeScript), lisää tarvittavat package/projektiriippuvuudet, sekä päivitä README.md ja docs/* vastaamaan toteutusta."
+claude "Luo tähän projektiin backend (C# .NET Azure Functions, HTTP-triggerit, isolated worker model) ja frontend (Vue + Vite + TypeScript), lisää tarvittavat package/projektiriippuvuudet, sekä päivitä README.md ja docs/* vastaamaan toteutusta."
 ```
 
 ## Hyvä komento ajamiseen (PowerShell)
@@ -95,7 +94,29 @@ claude "Luo tähän projektiin backend (C# .NET Web API) ja frontend (Vue + Vite
 Käynnistä taustapalvelu ja käyttöliittymä yhdellä komennolla projektin juuresta:
 
 ```powershell
-Start-Process powershell -ArgumentList '-NoExit','-Command','cd backend; dotnet run --project src/OneShot.Api'; cd frontend; npm run dev
+Start-Process powershell -ArgumentList '-NoExit','-Command','cd backend/src/OneShot.Functions; func start'; cd frontend; npm run dev
 ```
 
-TODO: päivitä `src/OneShot.Api`-polku, jos backendin käynnistysprojekti on nimetty toisin.
+TODO: päivitä `src/OneShot.Functions`-polku, jos backendin projekti on nimetty toisin. Vaatii Azure Functions Core Tools (`func`) asennettuna.
+
+## Mitä jää käsin tehtäväksi
+  Tarkista aina itse
+
+  - .gitignore sisältää appsettings.Development.json ja .env — Claude saattaa lisätä, mutta varmista
+  - JWT-avain on vaihdettu pois oletuksesta (change-this-long-secret)
+  - CORS-origin vastaa frontendisi porttia (oletuksena 5173, varmista)
+
+  Ennen CI/CD:tä
+
+  - Lisää GitHub Secrets: JWT_KEY, SQL_CONNECTION_STRING, AZURE_CREDENTIALS (jos Azure-kohde)
+  - Luo GitHub Environments dev ja prod hyväksyntäporteilla
+
+  Mitä Claude ei todennäköisesti tee
+
+  - Ei luo oikeita testejä — vain tyhjät testirakenteet / esimerkit
+  - Ei luo infra/-kansiota (Bicep) — se on erikseen
+  - Ei aja dotnet restore / npm install — komennot ovat vain ohjeissa
+
+  ---
+  Lyhyesti: Runko syntyy automaattisesti, mutta kaikki salaisuudet, tietokantayhteys ja ensimmäinen migraatio vaativat käsin tehtyä konfiguraatiota
+   ennen kuin sovellus oikeasti käynnistyy.

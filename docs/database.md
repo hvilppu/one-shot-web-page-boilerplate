@@ -21,8 +21,8 @@ Server=localhost;Database=OneShotDb;User Id=sa;Password=YourStrong!Passw0rd;Trus
 
 ```powershell
 cd backend
-dotnet ef migrations add InitialCreate --project src/OneShot.Infrastructure --startup-project src/OneShot.Api
-dotnet ef database update --project src/OneShot.Infrastructure --startup-project src/OneShot.Api
+dotnet ef migrations add InitialCreate --project src/OneShot.Infrastructure --startup-project src/OneShot.Functions
+dotnet ef database update --project src/OneShot.Infrastructure --startup-project src/OneShot.Functions
 ```
 
 TODO: päivitä `--project` ja `--startup-project` polut, jos EF Core -DbContext sijaitsee eri projektissa.

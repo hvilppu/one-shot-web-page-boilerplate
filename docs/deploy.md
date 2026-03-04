@@ -28,10 +28,10 @@
 Esimerkkikomento taustapalvelun julkaisuun:
 
 ```powershell
-dotnet publish ./backend/src/OneShot.Api --configuration Release
+dotnet publish ./backend/src/OneShot.Functions --configuration Release
 ```
 
-TODO: päivitä julkaistava projektipolku, jos backendin käynnistysprojekti on nimetty toisin.
+TODO: päivitä julkaistava projektipolku, jos backendin projekti on nimetty toisin.
 
 ## Julkaisun jälkeinen validointi
 

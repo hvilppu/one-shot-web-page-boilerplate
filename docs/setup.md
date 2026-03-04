@@ -45,7 +45,8 @@ Taustapalvelu:
 ```powershell
 cd backend
 dotnet restore
-dotnet run --project src/OneShot.Api
+cd src/OneShot.Functions
+func start
 ```
 
 Käyttöliittymä:
@@ -63,4 +64,4 @@ npm run dev
 - API-kutsut onnistuvat käyttöliittymästä taustapalveluun
 - Datan luku/kirjoitus MSSQL:ään onnistuu
 
-TODO: päivitä `src/OneShot.Api`-polku, jos backendin käynnistysprojekti on nimetty toisin.
+TODO: päivitä `src/OneShot.Functions`-polku, jos backendin projekti on nimetty toisin. Vaatii Azure Functions Core Tools (`func`).

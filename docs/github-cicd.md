@@ -59,10 +59,10 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore backend
-        run: dotnet restore ./backend/src/OneShot.Api
+        run: dotnet restore ./backend/src/OneShot.Functions
 
       - name: Build backend
-        run: dotnet build ./backend/src/OneShot.Api --configuration Release --no-restore
+        run: dotnet build ./backend/src/OneShot.Functions --configuration Release --no-restore
 
       - name: Test backend
         run: dotnet test ./backend/tests --configuration Release
